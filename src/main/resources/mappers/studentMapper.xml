@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yinyao.dao.studentMapper">
+	<select id="getStudents" resultMap="getStudentMap">
+        select * from classes c,student s where s.cid=c.cid and s.sid=#{sid}
+    </select>
+	<resultMap type="com.yinyao.entity.Student" id="getStudentMap">
+		<id column="sid" property="sid"></id>
+		<result column="sname" property="sname"/>
+		<association property="classes" javaType="com.yinyao.entity.Classes">
+			<id column="cid" property="cid"/>
+			<result column="cname" property="cname"/>
+		</association>
+	</resultMap>
+
+</mapper>
