@@ -7,20 +7,28 @@
 		<id property="id" column="id"/>
 		<result property="username" column="username"/>
 		<result property="password" column="password"/>
-		<association property="roleList" javaType="com.yinyao.entity.Role">
-			<id property="id" column="id"></id>
-			<result property="rolename" column="rolename"></result>
-		</association>
+		<collection property="roleList" ofType="com.yinyao.entity.Role">
+			<id property="role_id" column="role_id"></id>
+			<result property="rolename" column="rolename"/>
+			<collection property="permissionList"  ofType="com.yinyao.entity.Permission">
+				<id property="permission_id" column="permission_id"/>
+				<result property="permission" column="permission"/>
+			</collection>
+		</collection>
 	</resultMap>
     <select id="getUserInfoByUserName" resultType="com.yinyao.entity.User" parameterType="string">
 		select * from user_info a where a.username = #{username};
 	</select>
     <select id="getRoleNameByUserName"  resultMap="userinfo">
-		select a.username,a.password,c.rolename from
+		select a.*,c.*,e.* from
 		user_info a left join  user_role b
-		on a.id  = b.userid
+		on  b.userid = a.id
 		left join role c
-		on b.roleid = c.id
+		on  c.role_id = b.roleid
+		left join  role_permission d
+		on d.role_id = c.role_id
+		left join permission e
+		on  e.permission_id = d.permission_id
 		where a.username=#{username};
 	</select>
 	

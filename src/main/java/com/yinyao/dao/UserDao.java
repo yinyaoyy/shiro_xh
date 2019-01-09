@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface UserDao {
     User getUserInfoByUserName(String username);
-    public List<User> getRoleNameByUserName(String username);
+    public User getRoleNameByUserName(String username);
 }

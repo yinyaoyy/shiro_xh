@@ -19,8 +19,8 @@ public class UserService {
         User user = userDao.getUserInfoByUserName(username);
         return  user;
     }
-    public List<User> getRoleByUsername(String username){
-        List<User> role = userDao.getRoleNameByUserName(username);
+    public User getRoleByUsername(String username){
+        User role = userDao.getRoleNameByUserName(username);
         return  role;
     }
     public Classes getClassesInfoByUserName(String cid) {

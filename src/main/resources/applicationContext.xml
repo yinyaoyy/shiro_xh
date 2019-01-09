@@ -42,7 +42,8 @@
             </list>
         </property>
     </bean>
-    <!--json转化器，它可以将结果转化-->
+    <aop:aspectj-autoproxy expose-proxy="true"/>
+    <!--json转化器，它可以将结果转化，以免出现406错误！-->
     <bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
         <property name="supportedMediaTypes">
             <list>

@@ -3,15 +3,16 @@ package com.yinyao.entity;
 import java.util.List;
 
 public class Role {
-    private String id;
+    private String role_id;
     private String rolename;
     private List<Permission> permissionList;
-    public String getId() {
-        return id;
+
+    public String getRole_id() {
+        return role_id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setRole_id(String role_id) {
+        this.role_id = role_id;
     }
 
     public String getRolename() {
