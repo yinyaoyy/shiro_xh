@@ -6,6 +6,7 @@ import com.yinyao.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.yinyao.entity.User;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -20,8 +23,7 @@ public class LoginController {
 	@Resource
 	private UserService userService;
 @RequestMapping(value="login",method=RequestMethod.POST,produces="application/json;charset=utf-8")
-@ResponseBody
-	public Object getLogin(User user) throws Exception {
+	public String getLogin(User user, HttpServletRequest request) throws Exception {
 //	System.out.println(1111);
 //	Classes list = userService.getClassesInfoByUserName("1");
 //	User u = userService.getRoleByUsername("yinyao");
@@ -30,19 +32,24 @@ public class LoginController {
 //	System.out.println(s);
 //	System.out.println(ss);
 //	/*System.out.println(111);
+	HttpSession ss = request.getSession();
+	ss.setAttribute("yinyao","这是session的值。");
 	    Subject s = SecurityUtils.getSubject();
+	     Session session = s.getSession();
+	System.out.println("controller的sessionid:"+session.getId());
+	System.out.println(session.getHost());
 			UsernamePasswordToken u = new UsernamePasswordToken(user.getUsername(), user.getPassword());
 	    try {
 			s.login(u);
 		}catch (Exception e){
-	    	return e.getMessage();
+	    	return "404";
 		}
 
 	if(s.isAuthenticated()){
-		System.out.println(s.hasRole("超级管理员"));
-		return "认证成功！！！";
+		return "index";
+	}else {
+		return "404";
 	}
-		return "认证失败！！";
 	}
      @RequestMapping(value = "/testRole",method = RequestMethod.GET)
      @ResponseBody

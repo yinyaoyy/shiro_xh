@@ -3,15 +3,10 @@
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <% String web_path=request.getContextPath();%>
 <html>
-<head>
-    <title>Title</title>
-</head>
 <body>
 
-<form action="<%=web_path %>/login" method="post">
-    账号：<input type="text" name="username"><br>
-    密码：<input type="password" name="password"><br>
-    <input type="submit" value="登录">
-</form>
+<h2>Hello!</h2>
+<shiro:hasRole name="超级管理员">欢迎您超级管理员！</shiro:hasRole>
+<shiro:hasRole name="主任">欢迎您主任！</shiro:hasRole>
 </body>
 </html>

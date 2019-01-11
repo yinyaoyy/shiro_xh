@@ -11,6 +11,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     <!--创建 securityManager对象 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="myrealm"></property>
+       <!-- <property name="sessionManager" ref="sessionManager"/>--><!--暂时不需要自定义的session会话管理-->
     </bean>
  <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
     <property name="securityManager" ref="securityManager"></property>
@@ -33,13 +34,19 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          </util:map>
      </property>
  </bean>
+    <!--自定义的授权filter-->
     <bean id = "rolesFilter" class="com.yinyao.filter.RolesFilter"/>
-    <!--开启注解-->
+    <!-- 配置 Bean 后置处理器: 会自动的调用和 Spring 整合后各个组件的生命周期方法. -->
     <bean class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
     <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
         <property name="securityManager" ref="securityManager"/>
     </bean>
- <bean id="myrealm" class="com.yinyao.OwnRealm"/>
- 
+    <!--自定义的授权认证realm-->
+     <bean id="myrealm" class="com.yinyao.OwnRealm"/>
+   <!--自己写的sessionDao注入DefaultWebSessionManager，暂时不需要自定义的sessionManager-->
+    <!--<bean id="sessionManager" class="com.yinyao.session.CustomSessionManager">
+        <property name="sessionDAO" ref="redisSessionDao"/>
+    </bean>
+    <bean id="redisSessionDao" class="com.yinyao.session.RedisSessionDao"/>-->
     </beans>
     
